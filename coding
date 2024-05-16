@@ -1,0 +1,207 @@
+第一关
+BiTreeNode* CreatBiTree(char* s, int &i, int len)
+// 利用先序遍历创建二叉树
+// 参数：先序遍历字符串s，字符串初始下标i=0，字符串长度len。
+// 返回：二叉树
+{
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(i>=len||s[i]=='#')return NULL;
+BiTreeNode*root=new BiTreeNode(s[i]);
+i++;
+root->left=CreatBiTree(s,i,len);
+i++;
+root->right=CreatBiTree(s,i,len);
+return root;
+    /********** End **********/
+}
+
+void InOrder(BiTreeNode* root)
+// 二叉树的中序遍历
+// 参数：二叉树根节点root
+// 输出：中间没有空格，末尾不换行。
+{
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)return;
+    if(root->left!=NULL)
+    InOrder(root->left);
+    printf("%c",root->data);
+    if(root->right!=NULL)
+    InOrder(root->right);
+    /********** End **********/
+
+}
+第二关
+int GetTreeDepth(BiTreeNode* root)
+// 计算该二叉树的深度
+// 参数：二叉树根节点root
+// 返回：二叉树的深度
+{
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)return 0;
+    int l=GetTreeDepth(root->left);
+    int r=GetTreeDepth(root->right);
+    return l>r?l+1:r+1;
+
+    /********** End **********/
+}
+int i=0;
+int GetNodeNumber(BiTreeNode* root)
+// 计算该二叉树的总节点个数
+// 参数：二叉树根节点root
+// 返回：二叉树的总节点个数
+{
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)return 0;
+    i++;
+    if(root->left!=NULL)
+    GetNodeNumber(root->left);
+    if(root->right!=NULL)
+    GetNodeNumber(root->right);
+    return i;
+    
+    /********** End **********/
+}
+int cnt=0;
+int GetLeafNodeNumber(BiTreeNode* root)
+// 计算该二叉树的叶子节点个数
+// 参数：二叉树根节点root
+// 返回：二叉树的叶子节点个数
+{
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    
+    if(root==NULL)return 0;
+    if(root->left==NULL&&root->right==NULL){
+        cnt++;
+    }
+    if(root->left!=NULL)
+    GetLeafNodeNumber(root->left);
+    if(root->right!=NULL)
+    GetLeafNodeNumber(root->right);
+    return cnt;
+    /********** End **********/
+}
+第三关
+BiTreeNode* BiTreeChange(BiTreeNode* root)
+// 实现二叉树左右子树的交换（递归法）
+// 参数：二叉树根节点root
+// 返回：二叉树
+{
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+        if(root==NULL){return NULL;}
+        BiTreeNode*tmp=root->left;
+        root->left=root->right;
+        root->right=tmp;
+        if(root->left!=NULL){
+
+        BiTreeChange(root->left);
+        }
+        if(root->right!=NULL){
+        BiTreeChange(root->right);}
+        return root;
+    /********** End **********/
+}
+
+
+void PreOrder(BiTreeNode* root)
+// 二叉树的前序遍历
+// 参数：二叉树根节点root
+// 输出：二叉树的前序遍历，中间没有空格，末尾不换行。
+{
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL)return;
+    printf("%c",root->data);
+    if(root->left!=NULL){
+    PreOrder(root->left);
+    }
+    if(root->right!=NULL){
+
+    PreOrder(root->right);
+    }
+    
+    /********** End **********/
+}
+第四关
+BiTreeNode* BiTreeChangeStack(BiTreeNode* root)
+// 实现二叉树左右子树的交换（栈实现）
+// 参数：二叉树根节点root
+// 返回：二叉树
+{
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    if(root==NULL){
+        return NULL;
+    }
+    stack<BiTreeNode*>stk;
+    stk.push(root);
+    while(root&&!stk.empty())
+    {
+        BiTreeNode*tmp=root->left;
+        root->left=root->right;
+        root->right=tmp;
+        if(root->right!=NULL)
+        stk.push(root->right);
+        if(root->left!=NULL)
+        {
+            root=root->left;
+        }
+        else{
+            root=stk.top();
+            stk.pop();
+        }
+    }
+        return root;
+
+    
+    /********** End **********/
+}
+
+
+void PostOrder(BiTreeNode* root)
+// 二叉树的后序遍历
+// 参数：二叉树根节点root
+// 输出：二叉树的后序遍历，中间没有空格，末尾不换行。
+{
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+    
+    if(root==NULL)return;
+    if(root->left!=NULL){
+    PostOrder(root->left);
+    }
+    if(root->right!=NULL){
+
+    PostOrder(root->right);
+    }
+    printf("%c",root->data);
+    /********** End **********/
+}
+第五关
+void HierarchyOrder(BiTreeNode* root)
+// 二叉树的层次遍历（队列实现）
+// 参数：二叉树根节点root
+// 输出：二叉树的层次遍历，中间没有空格，末尾不换行。
+{
+    // 请在这里补充代码，完成本关任务
+    /********** Begin *********/
+queue<BiTreeNode*>Q;
+Q.push(root);
+while(!Q.empty()){
+    BiTreeNode* now=Q.front();
+    Q.pop();
+    printf("%c",now->data);
+    if(now->left!=NULL)
+    Q.push(now->left);
+    if(now->right!=NULL)
+    Q.push(now->right);
+}
+
+    /********** End **********/
+
+}
