@@ -1,0 +1,94 @@
+ybt_1286_怪盗基德
+code solution:
+#include<bits/stdc++.h>
+using namespace std;
+#define N 10005
+int n;
+int k;
+int dp[N];
+int dpp[N];
+int a[N];
+int main()
+{   /*输入部分*/
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    cin >> k ;
+    while(k--)
+    {   int ans1=-1,ans=-1;
+        int n;
+        cin>>n;
+        for(int i=1;i<=n;++i)
+        {
+            cin>>a[i];
+        }
+        
+        for(int i=1;i<=n;++i)
+        {
+            dp[i]=1;
+            for(int j=1;j<i;j++)
+            {  
+                if(a[i]>a[j])
+                dp[i]=max(dp[i],dp[j]+1);
+            }
+        ans=max(ans,dp[i]);
+        }
+        for(int i=1;i<=n;++i)
+        {
+            dpp[i]=1;
+            for(int j=1;j<i;j++)
+            {   if(a[i]<a[j])
+                dpp[i]=max(dpp[i],dpp[j]+1);
+            }
+        ans1=max(ans1,dpp[i]);
+        }
+        cout<<max(ans,ans1)<<'\n';
+    }
+    return 0;
+}
+
+ybt_1280_滑雪
+#include<bits/stdc++.h>
+using namespace std;
+#define N 105
+int n,m;
+int k;
+int dp[N][N];
+int a[N][N];
+ int dif[4][2]={{0,1},{0,-1},{1,0},{-1,0}};
+int dfs(int sx,int sy)
+{
+    if(dp[sx][sy]>0)return dp[sx][sy];
+    int cnt=0;
+    for(int i=0;i<4;++i)
+    {
+        int x=sx+dif[i][0];int y=sy+dif[i][1];
+        if(x>=1&&x<=n&&y>=1&&y<=m&&a[sx][sy]>a[x][y])
+        cnt=max(cnt,dfs(x,y));
+    }
+    return dp[sx][sy]=cnt+1;
+}
+int main()
+{   /*输入部分*/
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    int ans=-1;
+    cin>>n>>m;
+    //
+        for(int i=1;i<=n;++i)
+        {   
+            for(int j=1;j<=m;++j)
+            cin>>a[i][j];
+        }
+        
+        for(int i=1;i<=n;++i)
+        {
+            for(int j=1;j<=m;++j)
+            {
+                ans=max(ans,dfs(i,j));
+            }
+        }
+       cout<<ans;
+    return 0;
+}
